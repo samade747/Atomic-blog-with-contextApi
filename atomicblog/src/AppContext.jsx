@@ -1,10 +1,11 @@
-import React, { createContext, useState } from "react";
-
+import React, { createContext, useContext, useReducer } from "react";
+import { faker } from '@faker-js/faker';
+import { initialState, reducer, actionTypes } from "./AppReducer"
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    const [isFakeDark, setIsFakeDark] = useState(false);
+    const 
 
 
     return (
@@ -14,3 +15,5 @@ export const AppProvider = ({ children }) => {
     )
 
 }
+
+
