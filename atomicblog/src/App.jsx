@@ -62,9 +62,50 @@ function App() {
         });
     };
 
+    return (
+        <section>
+            <button onClick={toggleFakeDarkMode}
+            className="btn-fake-dark-mode"            
+            >{isFakeDark ? "☀️" : "🌙"}
+            </button>
 
+            <Header 
+            posts={searchedPosts}
+            onClearPosts={handleClearPosts}
+            searchQurey={searchQurey}
+            setSearchQurey={setSearchQurey}
+            />
 
-    
-
+            <Main posts={searchedPosts} onAddPost={handleAddPost}/>
+            <Archive onAddPost={handleAddPost} />
+            <Footer />
+        </section>        
+    );  
 }
 
+function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
+    return (
+        <header>
+            <h1>
+                <span>⚛️</span>The Atomic Blog
+            </h1>
+        <div>
+            <Results posts={posts}/>
+            <SearchPosts searchQurey={searchQurey}
+            setSearchQurey={setSearchQurey}
+            />
+            <button onClick={onClearPosts}>Clear posts</button>
+        </div>
+        </header>
+        );
+    }
+
+    function SearchPosts({ searchQurey, setSearchQurey}){
+        return(
+            <input 
+            value={searchQurey}
+            onChange={(e) => setSearchQurey(e.target.value)}
+            placeholder="Search posts"
+            />
+        );
+    }
