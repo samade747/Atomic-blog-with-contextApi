@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useStateValue } from "./AppContext";
 import { faker } from "@faker-js/faker";
+import { actionTypes } from "./AppReducer";
 
 function createRandomPost(){
     return {
@@ -19,18 +20,51 @@ function App() {
 
     const [posts, setPosts] = React.useState(() => 
        Array.from({length: 30}, () => createRandomPost())
-       // This line initializes the posts state using the useState hook, setting it to an array of 30 randomly generated posts.
-       
+       // This line initializes the posts state using the useState hook, setting it to an array of 30 randomly generated posts.       
     );
 
+    const [searchQurey, setSearchQurey] = React.useState('');
+    // This line initializes the searchQuery state using the useState hook, setting it to an empty string.
+
+    const searchedPosts = 
+        searchQurey.length > 0
+        ? posts.filter((post) =>
+            `${post.title} ${post.body}`
+                .toLowerCase()
+                .includes(searchQurey.toLowerCase())
+                )
+                : posts;
+                // This line calculates the searchedPosts based on whether searchQuery has a length greater than 0. If it does, it filters the posts array to include only those whose title or body includes the searchQuery. Otherwise, it returns all posts.
+
+    // function to handle adding a new post 
+    function handleAddPost(post){
+        setPosts((posts) => [post, ...posts]);     
+        // This function handleAddPost adds a new post to the posts state array.
+    }
+
+    // This function handleClearPosts clears all posts by setting the posts state array to an empty array.
+    function handleClearPosts(){
+        setPosts([]);
+    }
+
+    // effect to toggle fake Dark Mode class on documnet element 
+    useEffect(() => {
+        document.documentElement.classList.toggle("fake-dark-mode", isFakeDark)
+    }, [isFakeDark]);
+    // This useEffect hook toggles the "fake-dark-mode" class on the documentElement based on the isFakeDark state.
+
+
+
+    // This function toggleFakeDarkMode dispatches an action to toggle the isFakeDark state.
+    const toggleFakeDarkMode = () => {
+        dispatch({
+            type: actionTypes.TOGGLE_FAKE_DARK_MODE,
+        });
+    };
+
+
+
     
-
-
-
-
-
-
-
 
 }
 
