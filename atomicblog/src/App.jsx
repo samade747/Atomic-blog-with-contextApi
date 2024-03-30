@@ -109,3 +109,8 @@ function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
             />
         );
     }
+
+
+    
+
+
