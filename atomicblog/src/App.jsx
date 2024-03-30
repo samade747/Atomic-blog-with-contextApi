@@ -110,7 +110,30 @@ function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
         );
     }
 
+    function Results({posts}){
+        return(
+            <p>Results: {posts.length} Atomic posts found</p>
+        );
+    }
 
-    
+    function Main({posts, onAddPost}){
+        return (
+            <main>
+                <FormAddPost onAddPost={onAddPost}/>
+                <Posts posts={posts}/>  
+            </main>    
+        )
+    }
+
+    function Posts({posts}){
+        return (
+            <section>
+                <List posts={posts}/>
+            </section>        
+        )
+    }
+
+
+
 
 
