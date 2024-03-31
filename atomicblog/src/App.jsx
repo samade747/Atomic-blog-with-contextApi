@@ -133,7 +133,94 @@ function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
         )
     }
 
+    function FormAddPost({ onAddPost }){
+        const [title, setTitle] = React.useState('');
+        const [body, setBody] = React.useState('');
+
+        const handleSubmit = function (e) {
+            e.preventDefault();
+            if(!body || !title) return;
+            onAddPost({ title, body }); 
+            setTitle('');
+            setBody('');
+        };
+
+        return (
+            <form onSubmit={handleSubmit}>
+                <input 
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Post title"
+                />
+
+                <textarea 
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                placeholder="Post body"
+                />
+                <button>add post</button>
+            </form>
+        )
+    }
+
+    
+    function List({ posts }){
+        return(
+            <ul>
+                {posts.map((post, i) => {
+                    <li key={i}>
+                        <h3>{post.title}</h3>
+                        <p>{post.body}</p>
+                    </li>
+                })}
+            </ul>
+        );
+    }
+
+    function Archive({ onAddPost }) {
+        const [ posts ] = React.useState(() => {
+            Array.from({ length: 10000 }, () => createRandomPost())
+        })
+
+        const [ showArchive, setShowArchive ] = React.useState(false);
+
+        return(
+            <aside>
+                <h2>Post Archive</h2>
+                <button onClick={() => setShowArchive((s) => !s)}>
+                  { showArchive ? "Hide Archive posts" : "show Archive post"}    
+                </button>
+
+                {showArchive && (
+                    <ul>
+                        {posts.map((post, i) => {
+                            <li key={i}>
+                                <p>
+                                    <strong>{post.title}:</strong> {post.body}
+                                </p>
+                                <button onClick={() => onAddPost(post)}>add new post</button>
+
+                            </li>
+                        })}
+                    </ul>
+                )}
 
 
 
 
+            </aside>            
+        )
+
+
+    }
+
+
+
+
+    function Footer(){
+        return 
+        <footer>$copy: by samad</footer>
+    }
+
+
+    export default App;
