@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useStateValue } from "./AppContext";
 import { faker } from '@faker-js/faker';
-
 import { actionTypes } from "./AppReducer";
 
 function createRandomPost(){
@@ -14,18 +13,30 @@ function createRandomPost(){
 
 // Define the App component
 function App() { 
-    const contextValue = useStateValue();
-    if(!contextValue || contextValue.length === 0){
+    // const contextValue = useStateValue();
+    // console.log('Context value:', contextValue);
+    // if(!contextValue || contextValue.length === 0){
+    //     return <div>Loading...</div>;
+    // }
+
+    const { state, dispatch } = useStateValue();
+    console.log('Context value:', state);
+    
+    if (!state) {
         return <div>Loading...</div>;
     }
 
     // Get the isFakeDark state and dispatch function from the context
-    const [{isFakeDark}, dispatch] = contextValue;
+
+    const { isFakeDark } = state;
+    // const [{ isFakeDark }, dispatch] = useStateValue();
+
+
     // This line uses the useStateValue hook to get the isFakeDark state and the dispatch function from the context.
     // The useStateValue hook returns an array with the current state and a dispatch function that can be used to update the state.
 
     const [posts, setPosts] = React.useState(() => 
-       Array.from({length: 30}, () => createRandomPost())
+       Array.from({length: 10}, () => createRandomPost())
        // This line initializes the posts state using the useState hook, setting it to an array of 30 randomly generated posts.       
     );
 
@@ -69,7 +80,8 @@ function App() {
     };
 
     return (
-        <section>
+        <div style={{display: "flex", justifyContent: "center", flexDirection: "row"}}>
+        <section >
             <button onClick={toggleFakeDarkMode}
             className="btn-fake-dark-mode"            
             >{isFakeDark ? "☀️" : "🌙"}
@@ -86,12 +98,13 @@ function App() {
             <Archive onAddPost={handleAddPost} />
             <Footer />
         </section>        
+        </div>
     );  
 }
 
 function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
     return (
-        <header>
+        <header style={{display: "flex", justifyContent: "center", flexDirection: "row"}}>
             <h1>
                 <span>⚛️</span>The Atomic Blog
             </h1>
