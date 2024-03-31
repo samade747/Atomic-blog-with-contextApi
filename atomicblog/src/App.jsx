@@ -80,7 +80,7 @@ function App() {
     };
 
     return (
-        <div style={{display: "flex", justifyContent: "center", flexDirection: "row"}}>
+        <div style={{display: "flex", justifyContent: "center", flexDirection: "row", alignItems: "center", border: "1px solid black", width: "100%", padding: "10px"}}>
         <section >
             <button onClick={toggleFakeDarkMode}
             className="btn-fake-dark-mode"            
