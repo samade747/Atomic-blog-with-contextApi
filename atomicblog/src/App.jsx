@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useStateValue } from "./AppContext";
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
+
 import { actionTypes } from "./AppReducer";
 
 function createRandomPost(){
@@ -12,9 +13,14 @@ function createRandomPost(){
 };
 
 // Define the App component
-function App() {  
+function App() { 
+    const contextValue = useStateValue();
+    if(!contextValue || contextValue.length === 0){
+        return <div>Loading...</div>;
+    }
+
     // Get the isFakeDark state and dispatch function from the context
-    const [{ isFakeDark}, dispatch] = useStateValue(); 
+    const [{isFakeDark}, dispatch] = contextValue;
     // This line uses the useStateValue hook to get the isFakeDark state and the dispatch function from the context.
     // The useStateValue hook returns an array with the current state and a dispatch function that can be used to update the state.
 
@@ -167,12 +173,12 @@ function Header({posts, onClearPosts, searchQurey, setSearchQurey}){
     function List({ posts }){
         return(
             <ul>
-                {posts.map((post, i) => {
+                {posts.map((post, i) => (
                     <li key={i}>
                         <h3>{post.title}</h3>
                         <p>{post.body}</p>
                     </li>
-                })}
+                ))}
             </ul>
         );
     }

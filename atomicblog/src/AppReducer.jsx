@@ -15,9 +15,9 @@ export const reducer = (state, action) => {
                 isFakeDark: !state.isFakeDark
             }
         default:
-            return state
+            return state;
     }
-}
+};
 
 
 
